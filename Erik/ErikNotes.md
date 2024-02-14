@@ -17,3 +17,13 @@
  - $-\frac{1}{\rho}\nabla p$: The negative pressure gradient.
  - $v\nabla^2u$: Something to do with diffusion and shear forces. *Maybe I copied it down wrong?*
  - $F$: Any external forces such as Weight. 
+
+## 24-02-14
+ 'Derivation' of Material Derivative:
+ $$\text{Let: }f(t) = f\left(x(t), y(t),z(t),t \right)$$ 
+ $$\text{By chain rule: } \frac{Df}{Dt} = \frac{\delta f}{\delta t} + \frac{\delta f}{\delta x}\frac{\delta x}{\delta t} + \frac{\delta f}{\delta y}\frac{\delta y}{\delta t} + \frac{\delta f}{\delta z}\frac{\delta z}{\delta t}$$
+ $$\frac{Df}{Dt} = \frac{\delta f}{\delta t} + \frac{\delta f}{\delta x}\dot x + \frac{\delta f}{\delta y}\dot y + \frac{\delta f}{\delta z}\dot z$$
+ $$\frac{Df}{Dt} = \frac{\delta f}{\delta t} + \begin{pmatrix}\dot x \\ \dot y \\ \dot z \end{pmatrix}\cdot \begin{pmatrix}\frac{\delta x}{\delta t} \\ \frac{\delta y}{\delta t} \\ \frac{\delta z}{\delta t}\end{pmatrix}$$
+ $$\frac{Df}{Dt} = \frac{\delta f}{\delta t} + u\cdot \nabla f $$
+ $$\text{Bring $f$ out: } \frac{Df}{Dt} = \left(\frac{\delta}{\delta t} + u\cdot \nabla \right)f$$
+ With the Navier-Stokes equation, it happens that $f$ also equals $u$.
