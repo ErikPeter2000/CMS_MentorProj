@@ -26,4 +26,9 @@
  $$\frac{Df}{Dt} = \frac{\delta f}{\delta t} + \begin{pmatrix}\dot x \\ \dot y \\ \dot z \end{pmatrix}\cdot \begin{pmatrix}\frac{\delta x}{\delta t} \\ \frac{\delta y}{\delta t} \\ \frac{\delta z}{\delta t}\end{pmatrix}$$
  $$\frac{Df}{Dt} = \frac{\delta f}{\delta t} + u\cdot \nabla f $$
  $$\text{Bring $f$ out: } \frac{Df}{Dt} = \left(\frac{\delta}{\delta t} + u\cdot \nabla \right)f$$
- With the Navier-Stokes equation, it happens that $f$ also equals $u$.
+ With the Navier-Stokes equation, it happens that $f$ is $u$ too.
+
+ ## 24-02-20
+  - We can assume incompressibility in air because this only matters at the speed of sound. The atmosphere moves at slower speeds.
+  >In general, though, fluids are not compressible. For example, sound waves are exactly waves of compression in air, and cannot exist if air is incompressible. So we can alternatively state the assumption of incompressibility as “sound travels at infinite speed”. Hence, compressibility matters mostly when we are travelling near the speed of sound. If we are moving in low speeds, we can just pretend the fluid is indeed incompressible.
+  > --<cite> Dexter, Dexter's Notes (2016).
