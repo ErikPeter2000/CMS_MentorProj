@@ -32,3 +32,12 @@
   - We can assume incompressibility in air because this only matters at the speed of sound. The atmosphere moves at slower speeds.
   >In general, though, fluids are not compressible. For example, sound waves are exactly waves of compression in air, and cannot exist if air is incompressible. So we can alternatively state the assumption of incompressibility as “sound travels at infinite speed”. Hence, compressibility matters mostly when we are travelling near the speed of sound. If we are moving in low speeds, we can just pretend the fluid is indeed incompressible.
   > --<cite> Dexter, Dexter's Notes (2016).
+
+## 24-03-04
+ - Viscosity is a proportion of stress to rate of strain in a fluid.
+ - $$ \textbf{(Shear Strain) } \Delta \gamma = \frac{\Delta u \Delta t }{\Delta y}$$
+ $$\frac{\Delta \gamma}{ \Delta t} = \frac{\Delta u }{\Delta y} $$
+ $$\dot{\gamma} = \frac{d u}{dy}$$
+ $$\textbf{(Def. of Netwonian Fluid) } \tau = \mu \frac{d u}{dy}$$
+ $$\tau = \mu\dot\gamma$$
+ 
