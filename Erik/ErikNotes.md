@@ -11,22 +11,22 @@
  - Material Derivative: The rate of change of a vector with respect to both time and its own components. Useful when you want to define how a fluid moves with respect to time and the overall gradient of fluid.
  $$\frac{Du}{Dt} = (\frac{d}{dt}+u\cdot \nabla) u$$
  - Navier Stokes Equation:
- $$\frac{Du}{Dt} = -\frac{1}{\rho}\nabla p + v \nabla^2u + F$$
+ $$\frac{Du}{Dt} = -\frac{1}{\rho}\nabla p + \nu \nabla^2u + F$$
  $$\nabla u = 0$$
  - $\frac{Du}{Dt}$: The material derivative of the movement of the fluid.
  - $-\frac{1}{\rho}\nabla p$: The negative pressure gradient.
- - $v\nabla^2u$: Something to do with diffusion and shear forces. *Maybe I copied it down wrong?*
+ - $v\nabla^2u$: Something to do with diffusion and shear forces. *~~Maybe I copied it down wrong?~~ shown on 04-03.*
  - $F$: Any external forces such as Weight. 
 
 ## 24-02-14
  'Derivation' of Material Derivative:
- $$\text{Let: }f(t) = f\left(x(t), y(t),z(t),t \right)$$ 
- $$\text{By chain rule: } \frac{Df}{Dt} = \frac{\delta f}{\delta t} + \frac{\delta f}{\delta x}\frac{\delta x}{\delta t} + \frac{\delta f}{\delta y}\frac{\delta y}{\delta t} + \frac{\delta f}{\delta z}\frac{\delta z}{\delta t}$$
- $$\frac{Df}{Dt} = \frac{\delta f}{\delta t} + \frac{\delta f}{\delta x}\dot x + \frac{\delta f}{\delta y}\dot y + \frac{\delta f}{\delta z}\dot z$$
- $$\frac{Df}{Dt} = \frac{\delta f}{\delta t} + \begin{pmatrix}\dot x \\ \dot y \\ \dot z \end{pmatrix}\cdot \begin{pmatrix}\frac{\delta x}{\delta t} \\ \frac{\delta y}{\delta t} \\ \frac{\delta z}{\delta t}\end{pmatrix}$$
- $$\frac{Df}{Dt} = \frac{\delta f}{\delta t} + u\cdot \nabla f $$
- $$\text{Bring $f$ out: } \frac{Df}{Dt} = \left(\frac{\delta}{\delta t} + u\cdot \nabla \right)f$$
- With the Navier-Stokes equation, it happens that $f$ is $u$ too.
+ $$\text{Let: }f(x,y,z,t) = f\left(x(t), y(t),z(t),t \right)$$ 
+ $$\text{By chain rule, we define: } \frac{Df}{Dt} = \frac{\partial f}{\partial t} + \frac{\partial f}{\partial x}\frac{\partial x}{\partial t} + \frac{\partial f}{\partial y}\frac{\partial y}{\partial t} + \frac{\partial f}{\partial z}\frac{\partial z}{\partial t}$$
+ $$\frac{Df}{Dt} = \frac{\partial f}{\partial t} + \frac{\partial f}{\partial x}\dot x + \frac{\partial f}{\partial y}\dot y + \frac{\partial f}{\partial z}\dot z$$
+ $$\frac{Df}{Dt} = \frac{\partial f}{\partial t} + \begin{pmatrix}\dot x \\ \dot y \\ \dot z \end{pmatrix}\cdot \begin{pmatrix}\frac{\partial x}{\partial t} \\ \frac{\partial y}{\partial t} \\ \frac{\partial z}{\partial t}\end{pmatrix}$$
+ $$\frac{Df}{Dt} = \frac{\partial f}{\partial t} + u\cdot \nabla f $$
+ $$\text{Bring $f$ out: } \frac{Df}{Dt} = \left(\frac{\partial}{\partial t} + u\cdot \nabla \right)f$$
+ With the Navier-Stokes equations, it happens that $f$ is $u$.
 
  ## 24-02-20
   - We can assume incompressibility in air because this only matters at the speed of sound. The atmosphere moves at slower speeds.
@@ -40,4 +40,11 @@
  $$\dot{\gamma} = \frac{d u}{dy}$$
  $$\textbf{(Def. of Netwonian Fluid) } \tau = \mu \frac{d u}{dy}$$
  $$\tau = \mu\dot\gamma$$
- 
+ - The above equation makes sense when compared to solids since Newtonian fluids deform completely. For solids $\tau = \sigma \gamma$.
+ - We can then then do dimensional analysis to show that the unit for viscosity is Pascal-seconds. Stress has no units and rate is $\text{s}^{-1}.$
+ - Kinematic viscosity is dynamic viscosity per density, or $\nu = \frac{\mu}{\rho}$. This is seen in the form of the Navier-Stokes equations Charles gave us.
+ - Dexter's Notes part 1 shows that the equations for steady, laminar flow in one direction for a 2D plane to be as below. This is achieved by imagining the flow as layers or boxes with dimensions tending to 0, and equating the stresses for the x and y components:
+ $$\mu\frac{\partial^2 u}{\partial y^2} -\frac{\partial u}{\partial x}= 0$$
+ $$\frac{\partial p}{\partial y} = 0$$
+ - The $\nu \nabla^2 u$ term in the Navier-Stokes equation models turbulence, and can be ignored for fluids with high viscosity.
+ - Rayleigh Number (Ra): How turbulent the flow is. Higher is more turbulent; Lower is laminar. *I will look into derivation*.
