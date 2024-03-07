@@ -1,5 +1,4 @@
 # Meeting Wed 07 Feb
-Erik Hurinek
 
 ## Summary
  - Project is open-ended and designed to allow us to investigate "rabbit holes".

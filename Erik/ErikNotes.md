@@ -12,7 +12,7 @@
  $$\frac{Du}{Dt} = (\frac{d}{dt}+u\cdot \nabla) u$$
  - Navier Stokes Equation:
  $$\frac{Du}{Dt} = -\frac{1}{\rho}\nabla p + \nu \nabla^2u + F$$
- $$\nabla u = 0$$
+ $$\nabla \cdot u = 0$$
  - $\frac{Du}{Dt}$: The material derivative of the movement of the fluid.
  - $-\frac{1}{\rho}\nabla p$: The negative pressure gradient.
  - $v\nabla^2u$: Something to do with diffusion and shear forces. *~~Maybe I copied it down wrong?~~ shown on 04-03.*
@@ -48,3 +48,9 @@
  $$\frac{\partial p}{\partial y} = 0$$
  - The $\nu \nabla^2 u$ term in the Navier-Stokes equation models turbulence, and can be ignored for fluids with high viscosity.
  - Rayleigh Number (Ra): How turbulent the flow is. Higher is more turbulent; Lower is laminar. *I will look into derivation*.
+
+ ## 24-03-07 Meeting
+ - $Q$ is the rate of heat transfer into the system. $Q$ varies $T$, which changes $\rho$. This is expressed mostly in $c_p \frac{DT}{dt} = Q$. Note that $c_p$ is just heat capacity **not specific** heat capacity.
+ - Buoyancy can be considered to be an acceleration given by $-g\frac{\rho - \rho_0}{\rho_0}$ where $\rho_0$ is a relative density.
+ - Convection can be unstable with variations in density, as a hot particle rising into cooler air will keep rising chaotically.
+ - $u \cdot \nabla u$ is the main difficulty when solving the Navier-Stokes equation because it's non-linear. $\nu \nabla^2 u$ is not (nearly) as difficult.
