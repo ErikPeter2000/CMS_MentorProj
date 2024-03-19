@@ -28,7 +28,7 @@
  $$\text{Bring $f$ out: } \frac{Df}{Dt} = \left(\frac{\partial}{\partial t} + u\cdot \nabla \right)f$$
  With the Navier-Stokes equations, it happens that $f$ is $u$.
 
- ## 24-02-20
+## 24-02-20
   - We can assume incompressibility in air because this only matters at the speed of sound. The atmosphere moves at slower speeds.
   >In general, though, fluids are not compressible. For example, sound waves are exactly waves of compression in air, and cannot exist if air is incompressible. So we can alternatively state the assumption of incompressibility as “sound travels at infinite speed”. Hence, compressibility matters mostly when we are travelling near the speed of sound. If we are moving in low speeds, we can just pretend the fluid is indeed incompressible.
   > --<cite> Dexter, Dexter's Notes (2016).
@@ -49,8 +49,24 @@
  - The $\nu \nabla^2 u$ term in the Navier-Stokes equation models turbulence, and can be ignored for fluids with high viscosity.
  - Rayleigh Number (Ra): How turbulent the flow is. Higher is more turbulent; Lower is laminar. *I will look into derivation*.
 
- ## 24-03-07 Meeting
+## 24-03-07 Meeting
  - $Q$ is the rate of heat transfer into the system. $Q$ varies $T$, which changes $\rho$. This is expressed mostly in $c_p \frac{DT}{dt} = Q$. Note that $c_p$ is just heat capacity **not specific** heat capacity.
  - Buoyancy can be considered to be an acceleration given by $-g\frac{\rho - \rho_0}{\rho_0}$ where $\rho_0$ is a relative density.
  - Convection can be unstable with variations in density, as a hot particle rising into cooler air will keep rising chaotically.
  - $u \cdot \nabla u$ is the main difficulty when solving the Navier-Stokes equation because it's non-linear. $\nu \nabla^2 u$ is not (nearly) as difficult.
+
+## 24-03-24
+ - Prandtl number is the ratio of kinematic viscosity (momentum diffusivity) to thermal diffusivity.
+ - It represents how a fluid transfers heat. Low values mean that conduction 'dominates', whilst higher mean convection is a larger contributor to heat transfer.
+ - It is dimensionless.
+ - $$Pr = \frac{\nu}{\alpha} = \frac{\mu / \rho}{k / (C_p / \rho)} = \frac{\mu \cdot c_p}{k}$$
+ - Remember $\nu$ is the kinematic viscosity, a measure of resistance to shear forces ($m^2 s^{-1}$).
+ - $k$ is thermal conductivity, in $Wm^{-1}K^{-1}$.
+ - $c_p$ is specific heat $Jkg^{-1}K^{-1}$.
+ - $\alpha$ is the thermal diffusivity ($m^2 s^{-1}$), representing how fast heat diffuses through a material.
+ - $$\alpha = \frac{\text{Heat conducted}}{\text{Heat stored}} = \frac{k}{\rho \cdot c_p}$$
+
+ > https://www.thermal-engineering.org/what-is-prandtl-number-definition/  
+ > https://www.thermal-engineering.org/what-is-thermal-diffusivity-definition/  
+ > https://www.thermal-engineering.org/what-is-rayleigh-number-definition/  
+ > Accessed: 18/03/23  
