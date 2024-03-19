@@ -38,7 +38,7 @@
  - $$ \textbf{(Shear Strain) } \Delta \gamma = \frac{\Delta u \Delta t }{\Delta y}$$
  $$\frac{\Delta \gamma}{ \Delta t} = \frac{\Delta u }{\Delta y} $$
  $$\dot{\gamma} = \frac{d u}{dy}$$
- $$\textbf{(Def. of Netwonian Fluid) } \tau = \mu \frac{d u}{dy}$$
+ $$\textbf{(Def. of Newtonian Fluid) } \tau = \mu \frac{d u}{dy}$$
  $$\tau = \mu\dot\gamma$$
  - The above equation makes sense when compared to solids since Newtonian fluids deform completely. For solids $\tau = \sigma \gamma$.
  - We can then then do dimensional analysis to show that the unit for viscosity is Pascal-seconds. Stress has no units and rate is $\text{s}^{-1}.$
@@ -55,7 +55,7 @@
  - Convection can be unstable with variations in density, as a hot particle rising into cooler air will keep rising chaotically.
  - $u \cdot \nabla u$ is the main difficulty when solving the Navier-Stokes equation because it's non-linear. $\nu \nabla^2 u$ is not (nearly) as difficult.
 
-## 24-03-24
+## 24-03-18
  - Prandtl number is the ratio of kinematic viscosity (momentum diffusivity) to thermal diffusivity.
  - It represents how a fluid transfers heat. Low values mean that conduction 'dominates', whilst higher mean convection is a larger contributor to heat transfer.
  - It is dimensionless.
