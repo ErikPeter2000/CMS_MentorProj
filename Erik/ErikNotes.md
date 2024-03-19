@@ -65,8 +65,13 @@
  - $c_p$ is specific heat $Jkg^{-1}K^{-1}$.
  - $\alpha$ is the thermal diffusivity ($m^2 s^{-1}$), representing how fast heat diffuses through a material.
  - $$\alpha = \frac{\text{Heat conducted}}{\text{Heat stored}} = \frac{k}{\rho \cdot c_p}$$
-
+ - Rayleigh number: product of Grashof Number and Prantdl number. Describes how turbulent (high numbers) or laminar (low numbers) the flow is.
+ - Grashof number is the ratio of buoyant forces to viscous forces.
+ - Natural convection is a synonym for buoyancy-driven flow.
+ - Air becomes turbulent at around $Ra > 10^9$.
  > https://www.thermal-engineering.org/what-is-prandtl-number-definition/  
  > https://www.thermal-engineering.org/what-is-thermal-diffusivity-definition/  
  > https://www.thermal-engineering.org/what-is-rayleigh-number-definition/  
- > Accessed: 18/03/23  
+ > Accessed: 18/03/23   
+ > https://www.thermal-engineering.org/what-is-grashof-number-definition/  
+ > Accessed: 19/03/23  
