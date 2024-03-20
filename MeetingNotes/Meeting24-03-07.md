@@ -7,7 +7,7 @@
  - Next meeting planned on Thursday 21 at 13.30.
 
 ## Comments on Progress
- - The equations described in Dexter's notes are les relevant to the motion of the atmosphere (but still useful to know).
+ - The equations described in Dexter's notes are less relevant to the motion of the atmosphere (but still useful to know).
  - The next sections will be easier to present as a poster.
  - Should revise why we can assume incompressibility: yes, it is related to sound but also the huge scale of the height we are working with. 
  - Overleaf licence may be bought by teachers, otherwise Charles can create a project and we can use our free accounts.
