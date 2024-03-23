@@ -1,12 +1,12 @@
 # Ernie
 
 ## 20/03/2024
- - $$ F_buoyant = \rho g V_f$$
+ - $$ F_{buoyant} = \rho g V_f$$
 
  - $$ Gr = \frac{\text{buoyant force}}{\text{viscous force}} = \frac{g  \Delta\rho V}{\rho \nu^{2}} = \frac{g \beta \Delta T  V}{\nu^{2}}$$
- - $$ \beta  = \text{the inverse of the mean temperature } (K^{-1})$$
+ - $$ \beta  = \text{the reciprocal of mean temperature } (K^{-1})$$
  - $$ \rho = \text{density at mean temperature}$$
- - $$ g = \text{graviational constant } (m s^{-2})$$
+ - $$ g = \text{gravitational constant } (m s^{-2})$$
  - $$ \Delta T = \text{temperature difference } (K)$$
  - $$ \nu = \text{kinematic viscosity of the fluid} (m^{2} s^{-1})$$
 
