@@ -1,0 +1,9 @@
+ - equations are the navier stokes equations but you assume a mean state or steady state
+ - you start with a inital temperature profile but when convection happens temperature might change which is the perturbation profile (might have written this down wrong) 
+ - look at lorentz model and how chaos theory applies to the weather
+ - could look at lorentz system and try to code it up
+ - look at the ecmwf weather chaos theory paper
+ - explain the idea of how the weather evolves over time
+ - explain the question why it is so difficult to predict weather
+ - briefly go through how to model weather and why it is so hard
+ - put in one main equation not too many
