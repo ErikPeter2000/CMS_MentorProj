@@ -9,18 +9,28 @@ beta = 8/3
 dt = 0.01
 initial = (0.1,0.0,0.0)
 
+# The lorenz equations are a set of 3 differential equations that describe the position of a particle in a chaotic system
+# This function takes the initial position of the particle and calculates the trajectory of the particle using the lorenz equations
+# It then returns its full trajectory as an array of points
+# Note that point and position are used interchangeably here
 def generate_lorenz_trajectory(num_points, x=initial[0], y=initial[1], z=initial[2]):
-    print("Caclulating Trajectory")
-    points = np.zeros((num_points, 3))
-    inc = num_points//10
-    for i in range(num_points):
+    print("Calculating Trajectory")
+    points = np.zeros((num_points, 3)) # create an array to store the each point on the trajectory. We use 0s as placeholders
+    inc = num_points//10 # increment to print progress. Not actually needed to calculate.
+
+    for i in range(num_points): # iterate over the number of points
+        # calculate the differentials using the 3 Lorenz equations
         dx = sigma * (y - x) * dt
         dy = (x * (rho - z) - y) * dt
         dz = (x * y - beta * z) * dt
+        # update the x, y, z values
         x, y, z = x + dx, y + dy, z + dz
+        # store the x, y, z values in the points array
         points[i] = [x, y, z]
+        # print progress, again, only for feedback
         if i % inc == 0:
             print(f"{i}/{num_points}")
+    # print final progress
     print(f"{num_points}/{num_points}")
     return points
 
