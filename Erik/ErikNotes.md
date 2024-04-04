@@ -75,3 +75,21 @@
  > Accessed: 18/03/23   
  > https://www.thermal-engineering.org/what-is-grashof-number-definition/  
  > Accessed: 19/03/23  
+
+## 24-04-04  
+#### Javascript Lorenz Plotter Analysis
+ - Created plotter for Lorenz in Blender (for pretty renders) and JavaScript (for actual analysis).
+ - Typical shape is "the butterfly" with two spirals and the particle oscillates between the two.
+ - Interesting that as long as initial x and y are non-zero and, the trajectory will tend to the similar butterfly shape at a similar position.
+ - The greater $\rho$ is compared to $\sigma$, the more the particle oscillates between the two "wings".
+ - It may also be that when $\rho$ is roughly greater than $\sigma \times \beta$, two wings emerge, else the particle converges to a point in one spiral.
+ - Large values generally increase the scale of the butterfly.
+ - "Small values yield unsatisfying results".
+ - Initial $x, y=0$ gives a straight line to origin, which makes sense since there's no rate of convection or vertical temperature variation.
+
+#### Reading the Paper
+ - 2 main sources of error: lack of information regarding initial atmospheric conditions and loss of accuracy in calculation.
+ > "Ensemble prediction provided a
+way to overcome one of the problems highlighted by Simmons et al. (1995), since it can be used to estimate the
+forecast skill of a deterministic forecast, or, in other words, to forecast the forecast skill."  
+ > --<cite> Roberto Buizza (2002) "Chaos and Weather Prediction" ECMWF
