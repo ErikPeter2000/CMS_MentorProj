@@ -1,4 +1,5 @@
 # Meeting Thu 07 March 
+Erik
 
 ## Summary
  - Charles is pleased with the work done so far.

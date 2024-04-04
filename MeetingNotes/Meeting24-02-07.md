@@ -1,4 +1,5 @@
 # Meeting Wed 07 Feb
+Erik
 
 ## Summary
  - Project is open-ended and designed to allow us to investigate "rabbit holes".
