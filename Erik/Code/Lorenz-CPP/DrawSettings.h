@@ -7,24 +7,27 @@ struct DrawSettings
 public:
 	int Width;
 	int Height;
-	int Steps;
-	double Zoom = 0.01;
+	int SimulationSteps;
+	double Zoom = 0.016;
 	bool PlotTrajectory = false;
 	bool PlotEnd = true;
 	sf::Color EndColor = sf::Color::Red;
-	int EndSize = 3;
+	int EndSize = 1;
+	sf::Vector3<double> CameraPosition = sf::Vector3<double>(0, 0, 0);
+	double CameraRotationX = 0;
+	double CameraRotationY = 0;
 	DrawSettings(int width, int height, int steps)
 	{
-		this->Width = width;
-		this->Height = height;
-		this->Steps = steps;
+		Width = width;
+		Height = height;
+		SimulationSteps = steps;
 	};
 	DrawSettings(int width, int height, int steps, double zoom)
 	{
-		this->Width = width;
-		this->Height = height;
-		this->Steps = steps;
-		this->Zoom = zoom;
+		Width = width;
+		Height = height;
+		SimulationSteps = steps;
+		Zoom = zoom;
 	};
 };
 #define DRAWSETTINGS_H

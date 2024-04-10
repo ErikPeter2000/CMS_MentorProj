@@ -36,3 +36,6 @@
 *.app
 # build folder
 x64/
+
+#sfml
+SFML-2.6.1/

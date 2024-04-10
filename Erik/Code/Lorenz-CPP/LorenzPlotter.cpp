@@ -1,59 +1,88 @@
 #include "LorenzPlotter.h"
 #include <iostream>
+#include <omp.h>
+#include <math.h>
 
-std::vector<sf::Color> GeneratePalette(int size, double saturation = 1, double intensity = 1)
+static inline sf::Color generateColor(int attractorId, int maxAttractors, int step, int maxSteps, double z)
 {
-	std::vector<sf::Color> palette(size);
-	for (int i = 0; i < size; i++)
-	{
-		int r = 0;
-		int g = (int)((255 * i / size) * saturation + 255 - saturation * 255) * intensity;
-		int b = (int)((255 * (size - i) / size) * saturation + 255 - saturation * 255) * intensity;
-		palette[i] = sf::Color::Color(r, g, b);
-	}
-	return palette;
+	sf::Uint8 r = 128 - step * 128 / maxSteps;
+	sf::Uint8 g = 255-(sf::Uint8)std::min(((z + 2) * 4), 255.0);
+	sf::Uint8 b = step * 128 / maxSteps;
+	return sf::Color::Color(r, g, b);
+}
+
+static inline sf::Vector3<double> rotateX(sf::Vector3<double> position, double angle)
+{
+	double y = position.y;
+	position.y = y * cos(angle) - position.z * sin(angle);
+	position.z = y * sin(angle) + position.z * cos(angle);
+	return position;
+}
+
+static inline sf::Vector3<double> rotateY(sf::Vector3<double> position, double angle)
+{
+	double x = position.x;
+	position.x = x * cos(angle) - position.z * sin(angle);
+	position.z = x * sin(angle) + position.z * cos(angle);
+	return position;
 }
 
 void LorenzPlotter::PlotMultipleTrajectories(sf::Image& image, DrawSettings drawSettings)
 {
-	std::vector<sf::Color> palette = GeneratePalette(_settings.size, 1, 0.6);
-	std::vector<std::unique_ptr<LorenzAttractor>> lorenzAttractors(_settings.size);
-	for (int i = 0; i < _settings.size; i++)
+	// create the attractors
+	std::vector<std::unique_ptr<LorenzAttractor>> lorenzAttractors(_settings.attractorCount);
+	for (int i = 0; i < _settings.attractorCount; i++)
 	{
 		lorenzAttractors[i] = std::make_unique<LorenzAttractor>(_settings.GetSettings());
 	}
+
+	// progress display
 	int lastProgress = -1;
 	int progress = 0;
-	int updateStep = 10;
-	int incrememnt = drawSettings.Steps / updateStep;
-	int minX = -(drawSettings.Width / 2)/drawSettings.Zoom/ drawSettings.Width;
+	int updateStep = 5;
+	int incrememnt = drawSettings.SimulationSteps / updateStep;
+
+	// bounds for the plot, calculated first to avoid recalculating them for each step
+	int minX = -(drawSettings.Width / 2) / drawSettings.Zoom / drawSettings.Width;
 	int maxX = (drawSettings.Width / 2) / drawSettings.Zoom / drawSettings.Width;
 	int minY = -(drawSettings.Height / 2) / drawSettings.Zoom / drawSettings.Height;
 	int maxY = (drawSettings.Height / 2) / drawSettings.Zoom / drawSettings.Height;
-	for (int i = 0; i < drawSettings.Steps; i++) {
-		for (int j = 0; j < _settings.size; j++)
+	int minDim = std::min(drawSettings.Width, drawSettings.Height);
+
+	// plot the trajectories
+	for (int i = 0; i < drawSettings.SimulationSteps; i++) {
+		#pragma omp parallel for // parallelise the loop.
+		for (int j = 0; j < _settings.attractorCount; j++)
 		{
+			// get the next position of the attractor
 			sf::Vector3<double> position = lorenzAttractors[j]->Next();
-			if (position.x > minX && position.x < maxX && position.y > minY && position.y < maxY)
+			auto drawPosition = rotateX(position, drawSettings.CameraRotationX);
+			drawPosition = rotateY(drawPosition, drawSettings.CameraRotationY);
+			drawPosition += drawSettings.CameraPosition;
+			// calculate screen position
+			int x = (int)(drawPosition.x * minDim * drawSettings.Zoom + drawSettings.Width / 2);
+			int y = (int)(drawPosition.y * minDim * drawSettings.Zoom + drawSettings.Height / 2);
+			if (x > 0 && x < drawSettings.Width && y > 0 && y < drawSettings.Height)
 			{
-				int x = (int)(position.x * drawSettings.Width * drawSettings.Zoom + drawSettings.Width / 2);
-				int y = (int)(position.y * drawSettings.Height * drawSettings.Zoom + drawSettings.Height / 2);
-				sf::Color newColor = palette[j];
-				image.setPixel(x, y, newColor);
-				if (i == drawSettings.Steps - 1 && drawSettings.PlotEnd)
+				auto color = generateColor(j, _settings.attractorCount, i, drawSettings.SimulationSteps, position.z);
+				image.setPixel(x, y, color);
+				// draw a circle at the end of the trajectory
+				if (i == drawSettings.SimulationSteps - 1 && drawSettings.PlotEnd)
 				{
 					drawCircle(image, x, y, drawSettings.EndSize, drawSettings.EndColor);
 				}
 			}
 		}
+
+		// update progress
 		progress = i / incrememnt;
 		if (progress != lastProgress)
 		{
-			std::cout << progress* updateStep << "%" << std::endl;
+			std::cout << progress * 100 / updateStep << "%" << std::endl;
 			lastProgress = progress;
 		}
 	}
-	std::cout << "100% " << std::endl;
+	std::cout << "100%" << std::endl;
 }
 
 void LorenzPlotter::drawCircle(sf::Image& image, int centerX, int centerY, int radius, sf::Color color)

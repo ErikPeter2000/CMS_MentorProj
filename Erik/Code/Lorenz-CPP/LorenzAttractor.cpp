@@ -1,9 +1,7 @@
 #include "LorenzAttractor.h"
-LorenzAttractor::LorenzAttractor(LorenzSettings settings)
-{
-	_position = sf::Vector3<double>(settings.x0, settings.y0, settings.z0);
-	_settings = settings;
-}
+LorenzAttractor::LorenzAttractor(const LorenzSettings settings)
+	: _settings(settings), _position(settings.x0, settings.y0, settings.z0)
+{};
 sf::Vector3<double> LorenzAttractor::Next()
 {
 	double dx = _settings.sigma * (_position.y - _position.x);

@@ -1,8 +1,9 @@
-#include "NormalVariable.h"
 #include <SFML/Graphics.hpp>
+#include <random>
+
+constexpr double M_PI = 3.14159265358979323846;
 
 #pragma once
-#ifndef LORENZSETTINGS_H
 
 struct LorenzSettings
 {
@@ -15,6 +16,32 @@ struct LorenzSettings
 	double z0;
 };
 
+struct NormalVariable
+{
+public:
+	double Mean;
+	double Variance;
+	NormalVariable(double mean, double variance)
+	{
+		Mean = mean;
+		Variance = variance;
+	}
+	NormalVariable() : NormalVariable(0, 1) { }
+
+	double GetValue()
+	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_real_distribution<> dis(0, 1);
+
+		double u1 = dis(gen);
+		double u2 = dis(gen);
+		double randStdNormal = sqrt(-2.0 * log(u1)) * sin(2.0 * M_PI * u2);
+		return Mean + Variance * randStdNormal;
+	}
+
+};
+
 struct VariableLorenzSettings
 {
 	NormalVariable sigma;
@@ -24,7 +51,7 @@ struct VariableLorenzSettings
 	NormalVariable y0;
 	NormalVariable z0;
 	double dt;
-	int size;
+	int attractorCount;
 
 	LorenzSettings GetSettings()
 	{
@@ -39,6 +66,3 @@ struct VariableLorenzSettings
 		return settings;
 	}
 };
-
-#define LORENZSETTINGS_H
-#endif // !LORENZSETTINGS_H
