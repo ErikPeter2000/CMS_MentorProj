@@ -40,3 +40,11 @@ x64/
 #sfml
 SFML-2.6.1/
 enc_temp_folder/
+
+# LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.pdf

@@ -1,0 +1,59 @@
+\documentclass[25pt, a0paper, landscape]{tikzposter}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[skip=1em, indent=0pt]{parskip}
+\usepackage{graphicx}
+
+\title{Mathematics and Weather}
+\author{Erik, Ernie, Jasper, Rosie}
+\date{\today}
+\institute{Cambridge Maths School}
+\usetheme{Default}
+
+\begin{document}
+\maketitle
+
+
+\begin{columns}
+    \column{0.333}
+    \block{Objectives}{
+        Our primary project objectives were:
+        \vspace{0.4em}
+        \begin{itemize}
+            \item Determine how can we use mathematics to model fluids.
+            \item Discover what models are used to model the atmosphere.
+            \item To answer why it's difficult to predict the weather accurately.
+        \end{itemize}
+    }
+    \block{The Navier Stokes Equations}{
+        A Newtonian fluid is one where the stress on the fluid is proportional to the rate of strain. The Navier Stokes equations describe the motion of such fluids. The derivation isn't trivial, but in essence it combines Newton's second law, the conservation of mass, and equates shear stresses to produce the following differential equations:
+        \vspace{1em}
+        \begin{align}
+            \frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot \nabla) \mathbf{u} &= -\frac{1}{\rho} \nabla p + \nu \nabla^2 \mathbf{u} + \mathbf{F} \\
+            \nabla \cdot \mathbf{u} &= 0
+        \end{align} \par
+        \vspace{0.75em}
+        The left-hand side of (1) is the material derivative of velocity, and describes how velocity changes from the perspective of a particle. The right hand side is the sum of the pressure gradient, viscous (turbulent) forces, and external forces. Equation (2) is the incompressibility condition, which states that matter is not created or destroyed with respect to volume.
+        \par
+        Because of the $\frac{\text{D}\mathbf{u}}{\text{D} t}$ term, these equations are non-linear and difficult to solve. We are therefore forced to use numerical methods to approximate solutions. \par
+        The Navier Stokes equations also assume incompressibility, which as we all know, is not true for gases. However, this has very little effect on the accuracy of the model since variations in density are small and only occur near the speed of sound - nowhere near the speeds of weather systems. \par
+        You'll also notice that the equations lack any mention of temperature, which will cause variation in density and pressure.
+    }
+    \column{0.333}
+    \block{The Primitive Equations}{
+        These equations are a simplification of the Navier Stokes equations, and are used to model the atmosphere. We assume that the atmosphere is a thin layer of fluid, and that the Coriolis force is the only force acting on the fluid. This gives us the following equations:
+        \vspace{1em}
+        \begin{gather}
+            \frac{\text{D}u}{\text{D}t} - f_0v = -\frac{1}{\rho} \frac{\partial p}{\partial x} \\
+            \frac{\text{D}v}{\text{D}t} + f_0u = -\frac{1}{\rho} \frac{\partial p}{\partial y} \\
+            \frac{\partial p}{\partial z} = -\rho g \\
+            \nabla \cdot \textbf{u} = 0 \\
+            c_p \frac{\partial T}{\partial t} = Q
+        \end{gather} \par
+        \vspace{0.75em} 
+        Equations (3) and (4) are the Navier Stokes equations in the horizontal plane but with turbulence omitted for simplicity. Equation (5) is the hydrostatic equation and models the weight of the atmosphere. Equation (6) is the incompressibility condition. Equation (7) is the heat equation, which relates the temperature to heat flow into the system.
+    }
+\end{columns}
+
+\end{document}
