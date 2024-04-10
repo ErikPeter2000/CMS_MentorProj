@@ -1,0 +1,164 @@
+<head>
+    <meta charset="utf-8">
+    <title>Lorenz Trajectory Plotter</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        html, body{
+            font-size: 0.9em;
+            font-family: Arial, sans-serif;
+        }
+        #container {
+            display: flex;
+        }
+
+        #plot {
+            width: 100%;
+            height: 90vh;
+        }
+
+        h2, h3{
+            margin: 0;
+        }
+
+        #inputList {
+            display: flex;
+            flex-direction: column;
+            width: 315px;
+            overflow-y: scroll;
+            height: 65vh;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lorenz Trajectory Plotter</h1>
+    <div id="container">
+        <div id="inputContainer">
+            <h2>Input Parameters</h2>
+            <div id="inputList"></div>
+            <button onclick="addNewParameters()">New Trajectory</button>
+            <button onclick="plotTrajectories()">Plot Trajectories</button>
+            <img src="./equations.png"/>
+        </div>
+        <div id="plot"></div>
+    </div>
+    <script>
+        let currentId = 0;
+        function createInput(label, value, type, id) {
+            const labelElement = document.createElement("label");
+            labelElement.htmlFor = id;
+            labelElement.textContent = label;
+            const input = document.createElement("input");
+            input.value = value;
+            input.type = type;
+            input.id = id;
+            input.name = id;
+            return [labelElement, input];
+        }
+        function createLorenzInputForm(formId) {
+            const form = document.createElement("form");
+            const title = document.createElement("h3");
+            title.textContent = `${formId}`;
+            title.style.display = "inline";
+            form.appendChild(title);
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.type = "button";
+            deleteButton.onclick = (e) => {form.remove(); e.preventDefault()};
+            const br = document.createElement("br");
+            form.appendChild(deleteButton);
+            form.appendChild(br);
+            const inputs = [
+                ["Sigma (\u03B1 Prandtl Number, tdw Heat Transfer):", 10, "number", "sigma"],
+                ["Rho (\u03B1 Rayleigh Number, tdw turbulence):", 28, "number", "rho"],
+                ["Beta:", 2.67, "number", "beta"],
+                ["Delta (dt):", 0.001, "number", "delta"],
+                ["Steps:", 100000, "number", "steps"],
+                ["Initial Position:", "0.1,0,0", "text", "initialPosition"]
+            ];
+            inputs.forEach(([label, value, type, id]) => {
+                const [labelElement, input] = createInput(label, value, type, id);
+                const br = document.createElement("br");
+                form.appendChild(labelElement);
+                form.appendChild(br);
+                form.appendChild(input);
+                form.appendChild(document.createElement("br"));
+            });
+            form.id = formId;
+            form.submit = (e) => {plotTrajectories(); e.preventDefault()};
+            return form;
+        }
+        function addNewParameters() {
+            const inputList = document.getElementById("inputList");
+            inputList.appendChild(createLorenzInputForm(`form${currentId++}`));
+        }
+
+        function getLorenzParameters(formId) {
+            const form = document.getElementById(formId);
+            const formData = new FormData(form);
+            const rho = Number(formData.get("rho"));
+            const sigma = Number(formData.get("sigma"));
+            const beta = Number(formData.get("beta"));
+            const delta = Number(formData.get("delta"));
+            const steps = Number(formData.get("steps"));
+            const initialPosition = formData.get("initialPosition");
+            return { rho, sigma, beta, delta, steps, initialPosition };
+        }
+
+        function lorenz(x, y, z, rho, sigma, beta, dt) {
+            const dx = sigma * (y - x) * dt;
+            const dy = (x * (rho - z) - y) * dt;
+            const dz = (x * y - beta * z) * dt;
+            return { x: x + dx, y: y + dy, z: z + dz };
+        }
+
+        function plotTrajectories() {
+            let parameterList = [];
+            let children = document.getElementById("inputList").children;
+            for (let i = 0; i < children.length; i++) {
+                if (children[i].tagName === "FORM") {
+                    const id = children[i].id;
+                    parameterList.push(getLorenzParameters(id));
+                }
+            }
+            let trajectories = [];
+            for (let i = 0; i < parameterList.length; i++) {
+                const { rho, sigma, beta, delta, steps, initialPosition } = parameterList[i];
+                let [x, y, z] = initialPosition.split(",").map(Number);
+                const dt = delta;
+                const trajectory = Array.from({ length: steps }, (_, i) => {
+                    ({ x, y, z } = lorenz(x, y, z, rho, sigma, beta, dt));
+                    return { x, y, z };
+                });
+                const trace = {
+                    x: trajectory.map(({ x }) => x),
+                    y: trajectory.map(({ y }) => y),
+                    z: trajectory.map(({ z }) => z),
+                    mode: "lines",
+                    type: "scatter3d",
+                    line: { width: 6 },
+                    name: `Trajectory ${i + 1}`
+                };
+                trajectories.push(trace);
+            }
+            const layout = {
+                title: "Lorenz Trajectory",
+                scene: {
+                    xaxis: { title: "X" },
+                    yaxis: { title: "Y" },
+                    zaxis: { title: "Z" },
+                    camera: {
+                        eye: { x: -1.5, y: 1.5, z: 1.5 }
+                    }
+                }
+            };
+            Plotly.newPlot("plot", trajectories, layout);
+        }
+        addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                plotTrajectories();
+            }
+        });
+        addNewParameters();
+    </script>
+</body>
