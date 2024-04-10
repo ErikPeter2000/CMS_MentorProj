@@ -89,7 +89,12 @@
 
 #### Reading the Paper
  - 2 main sources of error: lack of information regarding initial atmospheric conditions and loss of accuracy in calculation.
- > "Ensemble prediction provided a
-way to overcome one of the problems highlighted by Simmons et al. (1995), since it can be used to estimate the
-forecast skill of a deterministic forecast, or, in other words, to forecast the forecast skill."  
+ > "Ensemble prediction provided a way to overcome one of the problems highlighted by Simmons et al. (1995), since it can be used to estimate the forecast skill of a deterministic forecast, or, in other words, to forecast the forecast skill."  
  > --<cite> Roberto Buizza (2002) "Chaos and Weather Prediction" ECMWF
+
+## 24-04-10
+#### Lorenz Plotter in C++
+ - C++ provided the performance to plot multiple attractors.
+ ![R1.png](./Code/Lorenz-CPP/Renders/R1.png)
+ - Simulation shows that the final value can take anything on the edges, with a very small variance in starting position.
+ - This shows that the weather is unpredictable, since each red dot is a possible state.
