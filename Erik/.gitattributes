@@ -1,0 +1,17 @@
+Lorenz-0.png filter=lfs diff=lfs merge=lfs -text
+Lorenz-1.png filter=lfs diff=lfs merge=lfs -text
+Lorenz-2.png filter=lfs diff=lfs merge=lfs -text
+Lorenz.png filter=lfs diff=lfs merge=lfs -text
+Lorenz2.png filter=lfs diff=lfs merge=lfs -text
+R1.png filter=lfs diff=lfs merge=lfs -text
+R2.png filter=lfs diff=lfs merge=lfs -text
+Lorenz-3.png filter=lfs diff=lfs merge=lfs -text
+output1.png filter=lfs diff=lfs merge=lfs -text
+output2.png filter=lfs diff=lfs merge=lfs -text
+output3.png filter=lfs diff=lfs merge=lfs -text
+R3.png filter=lfs diff=lfs merge=lfs -text
+R4.png filter=lfs diff=lfs merge=lfs -text
+R5.png filter=lfs diff=lfs merge=lfs -text
+Lorenz3.png filter=lfs diff=lfs merge=lfs -text
+Lorenz4.png filter=lfs diff=lfs merge=lfs -text
+Lorenz5.png filter=lfs diff=lfs merge=lfs -text

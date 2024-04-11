@@ -20,11 +20,11 @@ struct NormalVariable
 {
 public:
 	double Mean;
-	double Variance;
-	NormalVariable(double mean, double variance)
+	double StandardDeviation;
+	NormalVariable(double mean, double standardDeviation)
 	{
 		Mean = mean;
-		Variance = variance;
+		StandardDeviation = standardDeviation;
 	}
 	NormalVariable() : NormalVariable(0, 1) { }
 
@@ -37,7 +37,7 @@ public:
 		double u1 = dis(gen);
 		double u2 = dis(gen);
 		double randStdNormal = sqrt(-2.0 * log(u1)) * sin(2.0 * M_PI * u2);
-		return Mean + Variance * randStdNormal;
+		return Mean + StandardDeviation * randStdNormal;
 	}
 
 };
