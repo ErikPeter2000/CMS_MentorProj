@@ -1,11 +1,12 @@
 \documentclass[20pt, a0paper, landscape]{tikzposter}
-\usepackage{amsmath}
-\usepackage{lipsum}
-\usepackage{amssymb}
-\usepackage[skip=1em, indent=0pt]{parskip}
-\usepackage{graphicx}
+\usepackage{amsmath} % for maths equations
+\usepackage{lipsum} % for dummy text
+\usepackage{amssymb} % for maths symbols
+\usepackage[skip=1em, indent=0pt]{parskip} % for paragraph spacing
+\usepackage{graphicx} % for including images
 \usepackage{xfrac} % for nice fractions
 \usepackage{wrapfig} % for wrapping text around figures
+\usepackage{siunitx} % for SI units
 
 \title{Mathematics and Weather}
 \author{Erik, Ernie, Jasper, Rosie}
@@ -72,7 +73,6 @@
     \block{Lorenz Model and Chaos Theory}{
         The final mathematical model we investiagted was the Lorenz model, which is obtained by applying applying the Fourier expansion and Galerkin Truncation to the Rayleigh-Bénard model. We did not investigate the derivation of this model since it was beyond the scope of our project.
 
-        % TODO: explain what x,y,z,sigma,rho,beta are
         \vspace{1em}
         \begin{align}
             \frac{\partial x}{\partial t} &= \sigma(y - x) \\
@@ -80,6 +80,7 @@
             \frac{\partial z}{\partial t} &= xy - \beta z
         \end{align}\par
         \vspace{0.75em}
+        Here, $\sigma$ and $\rho$ are proportional to the Rayleigh and Prandtl numbers, and $\beta$ is related to vertical temperature variation. $x$ represents the rate of convection, $y,z$ represent horizontal and vertical temperature variation. \par
         We approximated and plotted the solutions using the simple Euler method. \par
         \begin{minipage}{0.1\textwidth}
             \begin{tikzfigure}[Lorenz Attractor, coloured by position.]
@@ -93,28 +94,74 @@
             \end{tikzfigure}
         \end{minipage}
         \vspace{1em}
-        \par
-        This shape is where the name "butterfly effect" comes from. Figure 2 shows how the attractor first stays roughly in the left wing, but spirals out and starts oscillating unpredictably between the two sides.\par
         
+        An attractor is the name given to the shape of this trajectory. Figure 2 shows how the trajectory first stays roughly in the left wing, but spirals out and starts oscillating unpredictably between the two sides.
+        
+        Simulations were programmed in Python and rendered in Blender. Later simulations were run in C++.
     }
     \column {0.25}
 
     % Too many Butterflies?
     \block{}{
-        \begin{wrapfigure}{r}{0.5\linewidth}
+        \begin{minipage}{0.1\textwidth}        
             \begin{tikzfigure}[Lorenz Attractor, $1\times 10^5$ steps.]
-                \includegraphics[width=0.1\textwidth]{Lorenz3.png}
+                \includegraphics[width=\textwidth]{Lorenz3.png}
             \end{tikzfigure}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.1\textwidth}
             \begin{tikzfigure}[Lorenz Attractor, $2\times 10^5$ steps.]
-                \includegraphics[width=0.1\textwidth]{Lorenz4.png}
+                \includegraphics[width=\textwidth]{Lorenz4.png}
             \end{tikzfigure}
+        \end{minipage}
+        \begin{wrapfigure}{r}{0.5\linewidth}
             \begin{tikzfigure}[Lorenz Attractor, $3\times 10^5$ steps.]
                 \includegraphics[width=0.1\textwidth]{Lorenz5.png}
             \end{tikzfigure}
-        \end{wrapfigure}\par
-        Figures 3-5 show how slight variations in starting conditions can lead to vastly different outcomes. Each simulation had initial $x,y,z$ following a normal distribution with standard deviation $0.001$. Figure 1 shows a predictable state where all attractors have roughly the same state and this variation has had no noticeable effect. Figure 2 shows some diversion, and figure three shows a chaotic system. Final states are shown by red dots.
+        \end{wrapfigure}
 
-        \lipsum[1]
+        Figures 3-5 show how slight variations in starting conditions can lead to vastly different outcomes. Each simulation had initial $x,y,z$ following a normal distribution with standard deviation 0.001. Figure 1 shows a predictable state where all 100 attractors have roughly the same state and this variation has had no noticeable effect. Figure 2 shows some diversion, and figure 3 shows chaos. Final states are shown by red dots.
+    }
+    \block{Attractors}{
+        Every dynamic system has its own attractor. The Lorenz attractor has the following properties:
+        \vspace{0.75em}
+        \begin{itemize}
+            \item A fractal (with dimension $\approx 2.06$).
+            \item Highly sensitive to initial conditions.
+            \item Aperiodic (it never repeats).
+            \item The system is deterministic (same initial values give the same results).
+        \end{itemize}
+        \vspace{1em}
+        This gives the Lorenz attractor the classification of a strange, chaotic attractor.
+    }
+    \block{Predicting Error}{
+        One important metric for a chaotic system is how quickly two nearby trajectories diverge: the Lyapunov exponent. We can determine this by calculating the distance between two trajectories compared to the initial distance. If we assume that distance grows exponentially, we can use the following exponential:
+        \vspace{0.75em}
+        \begin{equation}
+            d_t = d_0\, e^{\lambda t}
+        \end{equation}
+        \vspace{1em}
+        Where $d_t$ is the distance at time $t$, $d_0$ is the initial distance, and $\lambda$ is the Lyapunov exponent. For the Lorenz attractor, $\lambda \approx 0.9$, and is determined experimentally.
+
+        By knowing the Lyapunov exponent, we can predict when our simulation will become too inaccurate to use one it reaches a certain error threshold. The time at which this occurs is called the "predictability horizon".
+
+        For example, when asked the question, "How does a \qty{1}{\meter} initial error compare to a \qty{1}{\micro\meter} error with a threshold of \qty{1}{\kilo\meter}?" The \qty{1}{\meter} simulation reaches the threshold in a third of the time compared to \qty{1}{\micro\meter} simulation.
+    }
+    \column{0.25}
+    \block{Ensemble Forecasting}{
+        \lipsum[1-2]
+    }
+    \block{Conclusion}{
+        \lipsum[3]
+    }
+    \block{References}{
+        % Copilot generated
+        \begin{itemize}
+            \item Lorenz, E. N. (1963). Deterministic nonperiodic flow. Journal of the Atmospheric Sciences, 20(2), 130-141.
+            \item Lorenz, E. N. (1965). A study of the predictability of a 28-variable atmospheric model. Tellus, 17(3), 321-333.
+            \item Lorenz, E. N. (1993). The essence of chaos. University of Washington Press.
+            \item Lorenz, E. N. (2005). Designing Chaotic Models. Journal of the Atmospheric Sciences, 62(5), 1574-1587.
+        \end{itemize}
     }
 \end{columns}
 

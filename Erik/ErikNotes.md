@@ -98,3 +98,39 @@
  ![R1.png](./Code/Lorenz-CPP/Renders/R1.png)
  - Simulation shows that the final value can take anything on the edges, with a very small variance in starting position.
  - This shows that the weather is unpredictable, since each red dot is a possible state.
+
+## 24-04-12
+#### Some Vocabulary from Youtube
+- Chaotic Deterministic:
+    - Not random: There is one solution for every starting condition
+    - Aperiodic behaviour over time
+    - Sensitive to starting conditions
+- Dynamic System
+    - Involves variables that change over time according to autonomous differential equations.
+    - Autonomous Differential Equation: A DE that does not depend on the independent variable. There is not "t" in the equation, other than "dt".
+- Attractors: The set of points in phase space that attracts all the trajectories in the area surrounding it.
+    - Basin of attraction: The points that are attracted to the attractor.
+    - Fixed Point Attractor: The attractor does not move, and points that are attracted to it do not escape.
+    - Limit Cycle Attractor
+- Lorenz Attractor:
+    - Strange Chaotic Attractor
+    - Fractal structure: No point is visited twice, no two trajectories intersect.
+    - Dimension ~ 2.06
+- Lyapunov Exponent:
+    - A factor in measuring distance between trajectories. Used to measure and predict error.
+    - $d_t = d_0 e^{\lambda t}$
+    - Found experimentally
+    - ~0.9 for Lorenz Attractor.
+    - Rearrange for $t$ to find the time given a certain error. Known as the "predictability horizon"; when error becomes to large to predict meaningfully. 
+    - $t = \frac{1}{\lambda} \ln{\frac{\alpha}{d_0}}\; \alpha =$ maximum error.
+    - Video gives example to find how much more accurate an initial error of $1\mu m$ is vs $1m$ for $1km$ error.
+    $$\frac{\frac{1}{\lambda} \ln{\left( \frac{1000}{10^{-6}}\right)}}{\frac{1}{\lambda}\ln{\left( \frac{1000}{1}\right)}} = \frac{\ln{10^9}}{\ln{10^3}} = \frac{9}{3} = 3$$
+    - Very difficult to forecast more than a week ahead.
+
+> Gonkee (2021) *Chaos Theory: The language of (in)stability* Youtube url: https://www.youtube.com/watch?v=uzJXeluCKMs
+
+#### Ensemble Weather Prediction:
+ - Summary: Consider the vectors along which errors are most likely to occur, and sample these directions with a higher resolution.
+ - Initial observations can be measured in more detail by sending planes or focussing satellites.
+ - After recording data, the simulation has to be adjusted to meet these new observations (assimilation). In this time, more perturbations can occur.
+ - Ensemble weather prediction tries to consider these perturbations whilst during assimilation.
