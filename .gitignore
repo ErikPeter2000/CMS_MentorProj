@@ -47,4 +47,5 @@ enc_temp_folder/
 *.fls
 *.log
 *.synctex.gz
+*.synctex(busy)
 *.pdf

@@ -1,12 +1,13 @@
-\documentclass[20pt, a0paper, landscape]{tikzposter}
+\documentclass[14pt, a1paper, landscape]{tikzposter}
 \usepackage{amsmath} % for maths equations
 \usepackage{lipsum} % for dummy text
 \usepackage{amssymb} % for maths symbols
-\usepackage[skip=1em, indent=0pt]{parskip} % for paragraph spacing
+\usepackage[skip=1.1em, indent=0pt]{parskip} % for paragraph spacing
 \usepackage{graphicx} % for including images
 \usepackage{xfrac} % for nice fractions
 \usepackage{wrapfig} % for wrapping text around figures
 \usepackage{siunitx} % for SI units
+\usepackage{caption}
 
 \title{Mathematics and Weather}
 \author{Erik, Ernie, Jasper, Rosie}
@@ -17,11 +18,56 @@
 \begin{document}
 \maketitle
 
+% inline numbering
+\newcommand\inlineeqno{\hspace{1em} \stepcounter{equation}\ (\theequation) \hspace{1em} }
+% Remove the Fig: prefix from figure captions
+\renewenvironment{tikzfigure}[1][]{
+  \def \rememberparameter{#1}
+  \vspace{10pt}
+  \refstepcounter{figurecounter}
+  \begin{center}
+  }{
+    \ifx\rememberparameter\@empty
+    \else %nothing
+    \\[10pt]
+    {\small \rememberparameter}
+    \fi
+  \end{center}
+}
+
 % This is a draft. I understand that we should maybe cut down on the equations and their explanations.
 
 \begin{columns}
-    \column{0.25}
-    \block{Objectives}{
+    \column{0.3333}
+    \block{Navier Stokes Equations}{
+        The Navier Stokes Equations describe the motion of fluid in a continuous medium. They are derived from the conservation of mass and momentum, and are as follows:
+        \vspace{1em}
+        \begin{align}
+            \frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot \nabla) \mathbf{u} &= -\frac{1}{\rho} \nabla p + \nu \nabla^2 \mathbf{u} + \mathbf{F} \\
+            \nabla \cdot \mathbf{u} &= 0
+        \end{align} \par
+        \vspace{0.75em}
+        
+        The left side of equation (1) represents the acceleration of the fluid. The first term on the right side represents pressure, the second term represents viscosity, and the third term represents external forces. Equation (2) is the incompressibility condition.
+    }
+    \block{Primitive Equations}{
+        These equations are a simplification of the Navier Stokes equations, and are used to model the atmosphere.
+        \vspace{1em}
+        \begin{align*}
+            \frac{\text{D}u}{\text{D}t} - f_0v &= -\frac{1}{\rho} \frac{\partial p}{\partial x} & \inlineeqno & \frac{\text{D}v}{\text{D}t} + f_0u &= -\frac{1}{\rho} \frac{\partial p}{\partial y} & \inlineeqno & \frac{\partial p}{\partial z} &= -\rho g & \inlineeqno \\
+            \nabla \cdot \textbf{u} &= 0 & \inlineeqno & c_p \frac{\partial T}{\partial t} &= Q & \inlineeqno & & & 
+        \end{align*}
+    }
+    \block{Rayleigh-Bénard Convection Model}{
+        The Rayleigh-Bénard model is a simplified model of convection in a fluid. It is a 2D model with a fluid layer heated from below and cooled from above. The equations are as follows:
+        \begin{minipage}{\linewidth}
+            \begin{tikzfigure}
+                \includegraphics[width=0.62\textwidth]{example-image-a}
+            \end{tikzfigure}
+        \end{minipage}
+    }
+    \column{0.3333}    
+    \block{Objectives}{ % Highlight red or similar
         Our primary project objectives were:
         \vspace{0.4em}
         \begin{itemize}
@@ -30,98 +76,54 @@
             \item To answer why it's difficult to predict the weather accurately.
         \end{itemize}
     }
-    \block{Navier Stokes Equations}{
-        A Newtonian fluid is one where the stress on the fluid is proportional to the rate of strain. The Navier Stokes equations describe the motion of such fluids. The derivation isn't trivial, but in essence it combines Newton's second law, the conservation of mass, and equates shear stresses to produce the following differential equations:
-        \vspace{1em}
-        \begin{align}
-            \frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot \nabla) \mathbf{u} &= -\frac{1}{\rho} \nabla p + \nu \nabla^2 \mathbf{u} + \mathbf{F} \\
-            \nabla \cdot \mathbf{u} &= 0
-        \end{align} \par
-        \vspace{0.75em}
-        The left-hand side of (1) is the material derivative of velocity, and describes how velocity changes from the perspective of a particle. The right hand side is the sum of the pressure gradient, viscous (turbulent) forces, and external forces. Equation (2) is the incompressibility condition, which states that matter is not created or destroyed with respect to volume.
-        \par
-        Because of the $\frac{\text{D}\mathbf{u}}{\text{D} t}$ term, these equations are non-linear and difficult to solve. We are therefore forced to use numerical methods to approximate solutions. \par
-        The Navier Stokes equations also assume incompressibility, which as we all know, is not true for gases. However, this has very little effect on the accuracy of the model since variations in density are small and only occur near the speed of sound - nowhere near the speeds of weather systems. \par
-        You'll also notice that the equations lack any mention of temperature, which will cause variation in density and pressure.
-    }
-    \block{Primitive Equations}{
-        These equations are a simplification of the Navier Stokes equations, and are used to model the atmosphere. We assume that the atmosphere is a thin layer of fluid, and that the Coriolis force is the only force acting on the fluid. This gives us the following equations:
-        \vspace{1em}
-        \begin{gather}
-            \frac{\text{D}u}{\text{D}t} - f_0v = -\frac{1}{\rho} \frac{\partial p}{\partial x} \\
-            \frac{\text{D}v}{\text{D}t} + f_0u = -\frac{1}{\rho} \frac{\partial p}{\partial y} \\
-            \frac{\partial p}{\partial z} = -\rho g \\
-            \nabla \cdot \textbf{u} = 0 \\
-            c_p \frac{\partial T}{\partial t} = Q
-        \end{gather} \par
-        \vspace{0.75em} 
-        Equations (3) and (4) are the Navier Stokes equations in the horizontal plane but with turbulence omitted for simplicity. Equation (5) is the hydrostatic equation and models the weight of the atmosphere. Equation (6) is the incompressibility condition. Equation (7) equates temperature to heat flow into the system.
-    }
-    \column{0.25}
-    \block{Rayleigh-Bénard Convection Model}{
-        The RB model considers two plates with fluid between and the lower plate being heated.
-        \vspace{1em}
-        \begin{gather}
-            \frac{\partial \textbf{u}}{\partial t} = \sigma \nabla^2 \textbf{u} - \nabla p + \sigma \text{Ra} T \hat{\textbf{z}} \\
-            \frac{\partial T}{\partial t} = w + \nabla^2 T \\
-            \nabla \cdot \textbf{u} = 0
-        \end{gather}\par
-        \vspace{0.75em}
-        %TODO: Explain what the Rayleigh and Prandtl numbers are and what the model represents
-        \lipsum[2]
-    }
     \block{Lorenz Model and Chaos Theory}{
-        The final mathematical model we investiagted was the Lorenz model, which is obtained by applying applying the Fourier expansion and Galerkin Truncation to the Rayleigh-Bénard model. We did not investigate the derivation of this model since it was beyond the scope of our project.
+        The final mathematical model we investigated was the Lorenz model, which is obtained by applying applying the Fourier expansion and Galerkin Truncation to the Rayleigh-Bénard model. We did not investigate the derivation of this model since it was beyond the scope of our project.
 
-        \vspace{1em}
-        \begin{align}
+        \begin{wrapfigure}[20]{r}{0.45\linewidth}
+            \centering
+            \begin{minipage}{0.9\linewidth}
+                \begin{tikzfigure}[Fig 1: Lorenz Attractor, coloured by time.]
+                    \includegraphics[width=\textwidth]{Lorenz2.png}
+                \end{tikzfigure}
+            \end{minipage}
+            \begin{minipage}{0.9\linewidth}        
+                \begin{tikzfigure}[Fig 2]
+                    \includegraphics[width=\textwidth]{Lorenz3.png}
+                \end{tikzfigure}
+            \end{minipage}            
+        \end{wrapfigure}
+        \leavevmode
+        \begin{align*}
             \frac{\partial x}{\partial t} &= \sigma(y - x) \\
             \frac{\partial y}{\partial t} &= x(\rho - z) - y \\
             \frac{\partial z}{\partial t} &= xy - \beta z
-        \end{align}\par
-        \vspace{0.75em}
-        Here, $\sigma$ and $\rho$ are proportional to the Rayleigh and Prandtl numbers, and $\beta$ is related to vertical temperature variation. $x$ represents the rate of convection, $y,z$ represent horizontal and vertical temperature variation. \par
-        We approximated and plotted the solutions using the simple Euler method. \par
-        \begin{minipage}{0.1\textwidth}
-            \begin{tikzfigure}[Lorenz Attractor, coloured by position.]
-                \includegraphics[width=\textwidth]{Lorenz.png}
-            \end{tikzfigure}
-        \end{minipage}
-        \hfill
-        \begin{minipage}{0.1\textwidth}
-            \begin{tikzfigure}[Lorenz Attractor, coloured by time.]
-                \includegraphics[width=\textwidth]{Lorenz2.png}
-            \end{tikzfigure}
-        \end{minipage}
-        \vspace{1em}
+        \end{align*}
+
+        Here, $\sigma$ and $\rho$ are proportional to the Rayleigh and Prandtl numbers, and $\beta$ is related to vertical temperature variation. $x$ represents the rate of convection, $y,z$ represent horizontal and vertical temperature variation.
+        
+        We approximated and plotted the solutions using the simple Euler method.
         
         An attractor is the name given to the shape of this trajectory. Figure 2 shows how the trajectory first stays roughly in the left wing, but spirals out and starts oscillating unpredictably between the two sides.
-        
-        Simulations were programmed in Python and rendered in Blender. Later simulations were run in C++.
-    }
-    \column {0.25}
 
-    % Too many Butterflies?
-    \block{}{
-        \begin{minipage}{0.1\textwidth}        
-            \begin{tikzfigure}[Lorenz Attractor, $1\times 10^5$ steps.]
-                \includegraphics[width=\textwidth]{Lorenz3.png}
-            \end{tikzfigure}
-        \end{minipage}
-        \hfill
-        \begin{minipage}{0.1\textwidth}
-            \begin{tikzfigure}[Lorenz Attractor, $2\times 10^5$ steps.]
+        Figures 2-4 show how variations in starting conditions can lead to different outcomes. Figure 1 shows a predictable state where all 100 attractors have roughly the same state and this variation has had no noticeable effect. Figure 2 shows some diversion, and figure 3 shows chaos. Final states are shown by red dots.
+
+        \begin{minipage}{0.45\linewidth}
+            \begin{tikzfigure}[Fig 3]
                 \includegraphics[width=\textwidth]{Lorenz4.png}
             \end{tikzfigure}
         \end{minipage}
-        \begin{wrapfigure}{r}{0.5\linewidth}
-            \begin{tikzfigure}[Lorenz Attractor, $3\times 10^5$ steps.]
-                \includegraphics[width=0.1\textwidth]{Lorenz5.png}
+        \hfill
+        \begin{minipage}{0.45\linewidth}
+            \begin{tikzfigure}[Fig 4]
+                \includegraphics[width=\textwidth]{Lorenz5.png}
             \end{tikzfigure}
-        \end{wrapfigure}
+        \end{minipage}
+        
+        \vspace{1em}
 
-        Figures 3-5 show how slight variations in starting conditions can lead to vastly different outcomes. Each simulation had initial $x,y,z$ following a normal distribution with standard deviation 0.001. Figure 1 shows a predictable state where all 100 attractors have roughly the same state and this variation has had no noticeable effect. Figure 2 shows some diversion, and figure 3 shows chaos. Final states are shown by red dots.
+        Simulations were programmed in Python and rendered in Blender. Later simulations were developed in C++.
     }
+    \column{0.3333}
     \block{Attractors}{
         Every dynamic system has its own attractor. The Lorenz attractor has the following properties:
         \vspace{0.75em}
@@ -139,29 +141,13 @@
         \vspace{0.75em}
         \begin{equation}
             d_t = d_0\, e^{\lambda t}
-        \end{equation}
+        \end{equation}\par
         \vspace{1em}
         Where $d_t$ is the distance at time $t$, $d_0$ is the initial distance, and $\lambda$ is the Lyapunov exponent. For the Lorenz attractor, $\lambda \approx 0.9$, and is determined experimentally.
 
         By knowing the Lyapunov exponent, we can predict when our simulation will become too inaccurate to use one it reaches a certain error threshold. The time at which this occurs is called the "predictability horizon".
 
         For example, when asked the question, "How does a \qty{1}{\meter} initial error compare to a \qty{1}{\micro\meter} error with a threshold of \qty{1}{\kilo\meter}?" The \qty{1}{\meter} simulation reaches the threshold in a third of the time compared to \qty{1}{\micro\meter} simulation.
-    }
-    \column{0.25}
-    \block{Ensemble Forecasting}{
-        \lipsum[1-2]
-    }
-    \block{Conclusion}{
-        \lipsum[3]
-    }
-    \block{References}{
-        % Copilot generated
-        \begin{itemize}
-            \item Lorenz, E. N. (1963). Deterministic nonperiodic flow. Journal of the Atmospheric Sciences, 20(2), 130-141.
-            \item Lorenz, E. N. (1965). A study of the predictability of a 28-variable atmospheric model. Tellus, 17(3), 321-333.
-            \item Lorenz, E. N. (1993). The essence of chaos. University of Washington Press.
-            \item Lorenz, E. N. (2005). Designing Chaotic Models. Journal of the Atmospheric Sciences, 62(5), 1574-1587.
-        \end{itemize}
     }
 \end{columns}
 
