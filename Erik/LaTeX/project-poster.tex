@@ -1,3 +1,4 @@
+% Font size keeps getting smaller and smaller!
 \documentclass[14pt, a1paper, landscape]{tikzposter}
 \usepackage{amsmath} % for maths equations
 \usepackage{lipsum} % for dummy text
@@ -19,7 +20,7 @@
 \maketitle
 
 % inline numbering
-\newcommand\inlineeqno{\hspace{1em} \stepcounter{equation}\ (\theequation) \hspace{1em} }
+\newcommand\inlineeqno{\hspace{0.5em} \stepcounter{equation}\ (\theequation) \hspace{1.5em} }
 % Remove the Fig: prefix from figure captions
 \renewenvironment{tikzfigure}[1][]{
   \def \rememberparameter{#1}
@@ -54,8 +55,8 @@
         These equations are a simplification of the Navier Stokes equations, and are used to model the atmosphere.
         \vspace{1em}
         \begin{align*}
-            \frac{\text{D}u}{\text{D}t} - f_0v &= -\frac{1}{\rho} \frac{\partial p}{\partial x} & \inlineeqno & \frac{\text{D}v}{\text{D}t} + f_0u &= -\frac{1}{\rho} \frac{\partial p}{\partial y} & \inlineeqno & \frac{\partial p}{\partial z} &= -\rho g & \inlineeqno \\
-            \nabla \cdot \textbf{u} &= 0 & \inlineeqno & c_p \frac{\partial T}{\partial t} &= Q & \inlineeqno & & & 
+            \frac{\text{D}u}{\text{D}t} - f_0v &= -\frac{1}{\rho} \frac{\partial p}{\partial x} && \inlineeqno & \frac{\text{D}v}{\text{D}t} + f_0u &= -\frac{1}{\rho} \frac{\partial p}{\partial y} && \inlineeqno & \frac{\partial p}{\partial z} &= -\rho g && \inlineeqno \\
+            \nabla \cdot \textbf{u} &= 0 && \inlineeqno & c_p \frac{\partial T}{\partial t} &= Q && \inlineeqno & &
         \end{align*}
     }
     \block{Rayleigh-Bénard Convection Model}{
@@ -79,7 +80,7 @@
     \block{Lorenz Model and Chaos Theory}{
         The final mathematical model we investigated was the Lorenz model, which is obtained by applying applying the Fourier expansion and Galerkin Truncation to the Rayleigh-Bénard model. We did not investigate the derivation of this model since it was beyond the scope of our project.
 
-        \begin{wrapfigure}[20]{r}{0.45\linewidth}
+        \begin{wrapfigure}[30]{r}{0.45\linewidth}
             \centering
             \begin{minipage}{0.9\linewidth}
                 \begin{tikzfigure}[Fig 1: Lorenz Attractor, coloured by time.]
@@ -136,18 +137,25 @@
         \vspace{1em}
         This gives the Lorenz attractor the classification of a strange, chaotic attractor.
     }
+    \block{Weather Prediction in Practice}{
+        Weather forecast can be decomposed into two components: measuring the initial conditions for the model and running the simulation. Satellites, arial drones and ground stations can be used to record atmospheric data, but their accuracy and resolution are limited. A weather simulation is run constantly, so this data must be fed into the current model in a process called assimilation. The supercomputer running the model then computes a prediction.
+
+        The lack of accuracy in the initial conditions and the computation are the two main sources of error in weather prediction.
+    }
     \block{Predicting Error}{
         One important metric for a chaotic system is how quickly two nearby trajectories diverge: the Lyapunov exponent. We can determine this by calculating the distance between two trajectories compared to the initial distance. If we assume that distance grows exponentially, we can use the following exponential:
-        \vspace{0.75em}
-        \begin{equation}
-            d_t = d_0\, e^{\lambda t}
-        \end{equation}\par
-        \vspace{1em}
+        
         Where $d_t$ is the distance at time $t$, $d_0$ is the initial distance, and $\lambda$ is the Lyapunov exponent. For the Lorenz attractor, $\lambda \approx 0.9$, and is determined experimentally.
 
         By knowing the Lyapunov exponent, we can predict when our simulation will become too inaccurate to use one it reaches a certain error threshold. The time at which this occurs is called the "predictability horizon".
-
-        For example, when asked the question, "How does a \qty{1}{\meter} initial error compare to a \qty{1}{\micro\meter} error with a threshold of \qty{1}{\kilo\meter}?" The \qty{1}{\meter} simulation reaches the threshold in a third of the time compared to \qty{1}{\micro\meter} simulation.
+    }
+    \block{Conclusion}{
+        The Navier-Stokes Equations can be used to model most fluids. When combined with thermodynamics, these equations yield models suitable for the atmosphere. However, these equations remain difficult to solve and chaotic, such that small errors are amplified over time. This makes weather prediction challenging due to inaccurate data and imprecisisions in calculations. The predictability horizon is a useful tool for determining when a simulation is no longer accurate enough to be useful. For the Lorenz model, this happens to be about one week.
+    }
+    \block{References}{
+        \begin{itemize}
+            \item 
+        \end{itemize}
     }
 \end{columns}
 
