@@ -49,3 +49,8 @@ enc_temp_folder/
 *.synctex.gz
 *.synctex(busy)
 *.pdf
+*.run.xml
+*.bbl
+*.blg
+*.brf
+*.bcf
