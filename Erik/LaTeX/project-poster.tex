@@ -1,24 +1,30 @@
 % Font size keeps getting smaller and smaller!
-\documentclass[14pt, a1paper, landscape, blockverticalspace=0pt, colspace=0.5cm]{tikzposter}
+\documentclass[14pt, a1paper, landscape, blockverticalspace=-5mm, colspace=5mm]{tikzposter}
 \usepackage{amsmath} % for maths equations
 \usepackage{lipsum} % for dummy text
 \usepackage{amssymb} % for maths symbols
-\usepackage[skip=1.1em, indent=0pt]{parskip} % for paragraph spacing
 \usepackage{graphicx} % for including images
 \usepackage{xfrac} % for nice fractions
 \usepackage{wrapfig} % for wrapping text around figures
 \usepackage{siunitx} % for SI units
 \usepackage{biblatex} % Bibliography
 \addbibresource{bibliography.bib}
+\usepackage{enumitem}
+\usepackage{calc}
+
+\title{Mathematics and Weather}
+\author{Erik, Ernie, Jasper, Rosie}
+\date{\today}
+\institute{Cambridge Maths School}
 
 \definetitlestyle{titlestyle}{
- width=500mm, roundedcorners=10, linewidth=5pt
- }{
- \begin{scope}[line width=\titlelinewidth, rounded corners=\titleroundedcorners]
- \draw[color=framecolor, fill=titlebgcolor]
- (\titleposleft,\titleposbottom) rectangle (\titleposright,\titlepostop);
-  \end{scope}
- }
+    width=500mm, roundedcorners=10, titlegraphictotitledistance=0pt, titletoblockverticalspace=30pt
+}{
+    \begin{scope}[line width=\titlelinewidth, rounded corners=\titleroundedcorners]
+        \draw[color=framecolor, line width=0.5mm]
+        (\titleposleft,\titleposbottom) to (\titleposright,\titleposbottom);
+    \end{scope}
+}
 
 \defineblockstyle{blockstyle}{
     % titlewidthscale=0.9, bodywidthscale=1,titleleft,
@@ -36,15 +42,15 @@
     \colorlet{titlefgcolor}{black}
 }
 
-\title{Mathematics and Weather}
-\author{Erik, Ernie, Jasper, Rosie}
-\date{\today}
-\institute{Cambridge Maths School}
-
+% Fonts
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+% Remove list spacing
+\setlist{nosep}
 % Remove "made with tikz poster"
 \tikzposterlatexaffectionproofoff
 % inline numbering
-\newcommand\inlineeqno{\hspace{0.5em} \stepcounter{equation}\ (\theequation) \hspace{1em} }
+\newcommand\inlineeqno{\hspace{0.1em} \stepcounter{equation}\ (\theequation) \hspace{2em} }
 % Remove the Fig: prefix from figure captions
 \renewenvironment{tikzfigure}[1][]{
   \def \rememberparameter{#1}
@@ -66,18 +72,20 @@
 \usetitlestyle{titlestyle}
 \useblockstyle{blockstyle}
 \usecolorstyle{titlecolor}
-\maketitle
+\maketitle[width=0.955\linewidth]
+%\node[anchor=east, xshift=15mm, yshift=-1mm] at (TP@title.east) {\includegraphics[width=21cm]{cu_logo.png}};
+\node[anchor=east, xshift=-1cm, yshift=2mm] at (TP@title.east) {\includegraphics[width=12cm]{Logo.png}};
 
 \begin{columns}
-    \column{0.3333}
+    \column{0.33}
     \usecolorstyle{Britain}
     \colorlet{blocktitlefgcolor}{red!80!black}
-    \block{Objectives}{ % Highlight red or similar
+    \block{Objectives}{ 
         Our primary project objectives were:
         \vspace{0.4em}
         \begin{itemize}
-            \item Determine how can we use mathematics to model fluids.
-            \item Discover what models are used to model the atmosphere.
+            \item Determine how we can use mathematics to model fluids.
+            \item Discover how the atmosphere can be modelled.
             \item Answer why it's difficult to predict the weather accurately.
         \end{itemize}
     }
@@ -85,45 +93,51 @@
     \block{Navier Stokes Equations}{
         The Navier Stokes Equations describe the motion of fluid in a continuous medium. They are derived from the conservation of mass and momentum, and are as follows:
 
-        \vspace{1em}
         \begin{equation*}
             \frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot \nabla) \mathbf{u} = -\frac{1}{\rho} \nabla p + \nu \nabla^2 \mathbf{u} + \mathbf{F} \inlineeqno \hspace{2em}
             \nabla \cdot \mathbf{u} = 0 \inlineeqno
-        \end{equation*} \par
-        \vspace{0.75em}
+        \end{equation*}\vspace{1mm}
         
-        The left side of equation (1) represents the acceleration of the fluid. The first term on the right side represents pressure, the second term represents viscosity, and the third term represents external forces. Equation (2) is the incompressibility condition.
+        The left side of equation (1) represents the acceleration of the fluid. The first term on the right side represents force due to pressure, the second term represents viscosity, and the third term represents external forces. Equation (2) is the incompressibility condition.
         \cite{DexterNotes}
     }
     \block{Primitive Equations}{
-        These equations are a simplification of the Navier Stokes equations and are used to model the atmosphere.
-        \vspace{1em}
+        These equations are a simplification of the Navier Stokes equations and are used to model the atmosphere. We can make the assumptions that:
+        \vspace{0.4em}
+        \begin{itemize}
+            \item Depth of the atmosphere is small compared to the horizontal scale, so we can neglect fluid movement in the z (vertical) direction.
+            \item Gravity is locally vertical, and the model scale is small enough to neglect the curvature of the earth.
+            \item Dominant vertical forces are caused by buoyancy and the vertical pressure gradient.
+            \item Variations in density are insignificant except in their contributions to buoyancy (Boussinesq approximation).
+            \item The Coriolis effect (a force observed when air moves at different speeds due to its distance from its rotating axis) can be represented as a constant directional force.
+        \end{itemize}
+        
         \begin{align*}
-            \frac{\text{D}u}{\text{D}t} - f_0v &= -\frac{1}{\rho} \frac{\partial p}{\partial x} && \inlineeqno & \frac{\text{D}v}{\text{D}t} + f_0u &= -\frac{1}{\rho} \frac{\partial p}{\partial y} && \inlineeqno & \frac{\partial p}{\partial z} &= -\rho g && \inlineeqno \\
-            \nabla \cdot \textbf{u} &= 0 && \inlineeqno & c_p \frac{\partial T}{\partial t} &= Q && \inlineeqno & &
-        \end{align*}
-        \vspace{0.75em}
+            \frac{\mathrm{D}u}{\mathrm{D}t} - f_0v &= -\frac{1}{\rho} \frac{\partial p}{\partial x} && \inlineeqno & \frac{\mathrm{D}v}{\mathrm{D}t} + f_0u &= -\frac{1}{\rho} \frac{\partial p}{\partial y} && \inlineeqno & \frac{\partial p}{\partial z} &= -\rho g && \inlineeqno \\
+            \nabla \cdot \mathbf{u} &= 0 && \inlineeqno & c_p \frac{\partial T}{\partial t} &= Q && \inlineeqno & &
+        \end{align*}\vspace{1mm}
 
-        Equations (3) and (4) are the momentum equations, (5) is the hydrostatic equation, (6) is the incompressibility condition, and (7) is the energy equation. \cite{DexterNotes}
+        Equations (3) and (4) are the momentum equations, (5) is the hydrostatic equation, (6) is the incompressibility condition, and (7) is the energy equation \cite{DexterNotes}.
     }
     \block{Rayleigh-Bénard Convection Model}{
-        The Rayleigh-Bénard model is a simplified model of convection in a fluid. It is a 2D model with a fluid layer heated from below and cooled from above.
+        Convection is the movement of fluid caused by differences in temperature and density. The Rayleigh-Bénard model is a simplified model of convection. It is a 2D model with a fluid layer heated from below and cooled from above.
         
         \begin{minipage}{\linewidth}
-            \begin{tikzfigure}[Fig 1: A visualisation of the Rayleigh-Bénard Convection model. \cite{NACADlabs}]
-                \includegraphics[width=0.7\textwidth]{RB.png}
+            \begin{tikzfigure}[Fig 1: A visualisation of the Rayleigh-Bénard Convection model \cite{NACADlabs}. Fluid rises as it is heated and then falls once it cools.]
+                \includegraphics[width=0.6\textwidth]{RB.png}
             \end{tikzfigure}
         \end{minipage}
     }
-    \column{0.3333}    
+    \column{0.33}    
     \block{Lorenz Model and Chaos Theory}{
-        The final mathematical model we investigated was the Lorenz model, which is obtained by applying the Fourier expansion and Galerkin Truncation to the Rayleigh-Bénard model. We did not investigate the derivation of this model since it was beyond the scope of our project.
+        The final mathematical model we investigated was the Lorenz model, which is obtained by applying a Fourier expansion and Galerkin Truncation to the Rayleigh-Bénard model. We did not investigate the derivation since it was beyond the scope of our project.
 
-        \begin{wrapfigure}[11]{r}{0.45\linewidth}
+        \begin{wrapfigure}[14]{r}{0.58\linewidth}
             \centering
             \begin{minipage}{0.9\linewidth}
                 \begin{tikzfigure}[Fig 2: Lorenz Attractor, coloured by time.]
                     \includegraphics[width=\textwidth]{Lorenz2.png}
+                    \vspace{-2em}
                 \end{tikzfigure}
             \end{minipage}  
         \end{wrapfigure}
@@ -132,64 +146,70 @@
             \frac{\partial x}{\partial t} &= \sigma(y - x) \\
             \frac{\partial y}{\partial t} &= x(\rho - z) - y \\
             \frac{\partial z}{\partial t} &= xy - \beta z
-        \end{align*}
-        \vspace{0.75em}
+        \end{align*} \vspace{1mm}
 
-        Here, $\sigma$ and $\rho$ are proportional to the Rayleigh and Prandtl numbers, and $\beta$ is related to vertical temperature variation. $x$ represents the rate of convection, $y,z$ represent horizontal and vertical temperature variation. \cite{Lorenz}
-        
-        We approximated and plotted the solutions using the simple Euler method.
-        
-        An attractor is the name given to the shape of this trajectory. Figure 3 shows how the trajectory first stays roughly in the left wing, but spirals out and starts oscillating unpredictably between the two sides.
+        Here, $\rho$ and $\sigma$ are proportional to the Rayleigh number (how turbulent the flow is) and Prandtl number (the ratio of heat transfer by convection to conduction) respectively, and $\beta$ is related to vertical temperature variation. $x$ represents the rate of convection, $y,z$ represent horizontal and vertical temperature variation \cite{Lorenz}.
 
-        Figures 3-5 show how variations in starting conditions can lead to different outcomes. Figure 3 shows a predictable state where all 100 attractors have roughly the same state and this variation has had no noticeable effect. Figure 4 shows some diversion, and Figure 5 shows chaos. The final states are shown by red dots.
+        These differential equations are autonomous (the right side of the derivatives are independent of time) and describe a dynamical system.  We approximated and plotted the solutions using an Euler method. Figure 2 shows the evolution of these equations in phase space, coloured by time from red at $t=0$ to blue.
+        
+        An attractor is the set of numerical values towards which a dynamical system tends to evolve. It can be imagined as the shape of the trajectories that the equations trace. Figure 2 shows how the trajectory first stays roughly in the left wing, but gradually spirals out before oscillating unpredictably between the two sides.
+
+        Figures 3-5 show how variations in starting conditions can lead to varied outcomes in the forecast. Figure 3 shows a state where all trajectories are similar. Figure 4 shows these trajectories beginning to diverge as time increases. The trajectories in Figure 5 have diverged greatly and their final states (shown by red dots) are very different. 
     
         \vspace{1em}
         \begin{minipage}{0.33\linewidth}        
             \begin{tikzfigure}[Fig 3]
                 \includegraphics[width=\textwidth]{Lorenz3.png}
+                \vspace{-2em}
             \end{tikzfigure}
         \end{minipage}          
         \begin{minipage}{0.33\linewidth}
             \begin{tikzfigure}[Fig 4]
                 \includegraphics[width=\textwidth]{Lorenz4.png}
+                \vspace{-2em}
             \end{tikzfigure}
         \end{minipage}
         \begin{minipage}{0.33\linewidth}
             \begin{tikzfigure}[Fig 5]
                 \includegraphics[width=\textwidth]{Lorenz5.png}
+                \vspace{-2em}
             \end{tikzfigure}
         \end{minipage}        
         \vspace{1em}
 
-        Simulations were programmed in Python and rendered in Blender. Later simulations were developed in C++.
+        Simulations were programmed in Python and rendered in Blender. Later simulations were developed in C++ and rendered using SFML \cite{SFML}.
     }
     \block{Attractors}{
-        Every dynamic system has its own attractor. The Lorenz attractor has the following properties:
-        \vspace{0.75em}
+        Most dynamical systems have an attractor. The Lorenz attractor has the following properties:
+        \vspace{0.4em}
         \begin{itemize}
-            \item A fractal (with dimension $\approx 2.06$).
+            \item A fractal (a mathematical shape containing geometric similarity at multiple scales) with dimension $\approx 2.06$.
             \item Highly sensitive to initial conditions.
-            \item Aperiodic (it never repeats).
+            \item Aperiodic (the trajectory never repeats).
             \item The system is deterministic (the same initial values give the same results).
         \end{itemize}
-        \vspace{1em}
-        This gives the Lorenz attractor the classification of a strange, chaotic attractor. \cite{Gonkee}
+        \vspace{0.4em}
+        This gives the Lorenz attractor the classification of a strange, chaotic attractor \cite{Gonkee}.
     }
-    \column{0.3333}
-    \block[titleoffsety=-0.201cm, bodyoffsety=-0.201cm]{Weather Prediction in Practice}{
-        Weather forecasts can be decomposed into two components: measuring the initial conditions for the model and running the simulation. Satellites, aerial drones and ground stations can be used to record atmospheric data, but their accuracy and resolution are limited. A weather simulation is run constantly, so this data must be fed into the current model in a process called assimilation. The supercomputer running the model then computes a prediction.
-
-        The lack of accuracy in the initial conditions and the computation are the two main sources of error in weather prediction. \cite{ECMWF}
+    \column{0.33}
+    \block[titleoffsety=-5px, bodyoffsety=-5px]{Weather Prediction in Practice}{
+        Weather forecasting can be divided into two components: measuring the initial conditions for the model and running the simulation. Satellites, aerial drones and ground stations can be used to record atmospheric data, but their accuracy and resolution are limited. A weather simulation is run constantly, so this data must be fed into the current model in a process called assimilation. After (or during) assimilation, the supercomputer running the model computes a prediction. The lack of accuracy in the initial conditions and cumulative errors in the computation are the two main sources of error in weather prediction \cite{ECMWF}.
     }
     \block{Predicting Error}{
-        One important metric for a chaotic system is how quickly two nearby trajectories diverge: the Lyapunov exponent. We can determine this by calculating the distance between two trajectories compared to the initial distance. If we assume that distance grows exponentially, we can use the following exponential: \( d_t = d_0 e^{\lambda t} \)
+        \begin{wrapfigure}{r}{0.5\linewidth}
+            \vspace{-2em} % Remove the margin that tikzfigure inserts
+            \begin{minipage}{\linewidth}
+                \begin{tikzfigure}[Fig 6: Weather is predictable within the linear regime, but less so afterwards \cite{ECMWF}.\par]
+                    \includegraphics[width=\textwidth]{Regimes.png}
+                    \vspace{-2em}
+                \end{tikzfigure}
+            \end{minipage}
+        \end{wrapfigure}
         
-        Where $d_t$ is the distance at time $t$, $d_0$ is the initial distance, and $\lambda$ is the Lyapunov exponent. For the Lorenz attractor, $\lambda \approx 0.9$, and is determined experimentally.
-
-        By knowing the Lyapunov exponent, we can predict when our simulation will become too inaccurate to use once it reaches a certain error threshold. The time at which this occurs is called the "predictability horizon". \cite{Gonkee}
+        One important metric for a chaotic system is how quickly two nearby trajectories diverge, which is quantified by the Lyapunov exponent $\lambda$. We can determine $\lambda$ by calculating the ratio of the current distance between two trajectories to their initial distance. If we assume that distance grows exponentially, we can use the exponential, \( d_t = d_0 e^{\lambda t} \), where $d_t$ is the distance at time $t$, $d_0$ is the initial distance, and $\lambda$ is the Lyapunov exponent. For the Lorenz attractor, $\lambda \approx 0.9$, which is determined experimentally. By knowing the Lyapunov exponent, we can predict when our simulation will become too inaccurate once it reaches a certain error threshold. The time at which this threshold is exceeded is called the "predictability horizon" \cite{Gonkee}.
     }
     \block{Conclusion}{
-        The Navier-Stokes Equations can be used to model most fluids where stress is proportional to the rate of strain, and are derived mostly by considering Newton's second law\cite{DexterNotes}. When combined with thermodynamics, these equations yield models suitable for the atmosphere such as the Rayleigh-Bénard equations. However, these equations remain difficult to solve and are chaotic, such that small errors are amplified over time. This makes weather prediction challenging due to inaccurate data and imprecision in calculations. The predictability horizon is a useful metric for determining when a simulation is no longer accurate enough to be useful. In modern simulations, this happens to be about 10 days \cite{ECMWF}.
+        The Navier-Stokes Equations can be used to model fluids where stress is proportional to the rate of strain (formally called Newtonian fluids). They are derived mostly by considering Newton's second law \cite{DexterNotes}. When combined with thermodynamics, these equations yield models suitable for approximating the atmosphere such as the Rayleigh-Bénard equations. However, these equations remain difficult to solve and are chaotic, such that small errors are amplified over time. This makes weather prediction challenging due to inaccurate data and imprecision in calculations. The predictability horizon is a useful metric for determining when a simulation is no longer accurate enough to be useful. In modern simulations, the weather can be predicted accurately within 3-5 days and predictability is limited to about 10 days \cite{ECMWF}.
     }
     \block{References}{
         \printbibliography[heading=none]
